@@ -35,68 +35,85 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Premium Light Styling matching Blue, Orange, and White palette
-st.markdown(f"""
+# Premium Adaptive Styling supporting both Light and Dark mode
+st.markdown("""
 <style>
-    .main {{
-        background-color: {COLOR_LIGHT_BG};
-        color: {COLOR_DARK_TEXT};
-    }}
-    h1, h2, h3, h4 {{
-        color: {COLOR_BLUE} !important;
+    /* Base theme bindings */
+    .main {
+        background-color: var(--background-color);
+        color: var(--text-color);
+    }
+    h1, h2, h3, h4 {
+        color: var(--primary-color) !important;
         font-family: 'Outfit', sans-serif;
-    }}
-    .sidebar .sidebar-content {{
-        background-color: {COLOR_BLUE};
-        color: #ffffff;
-    }}
-    .stCard {{
-        background-color: {COLOR_WHITE};
+    }
+    .stCard {
+        background-color: var(--secondary-background-color);
         border-radius: 12px;
         padding: 20px;
-        border: 1px solid {COLOR_BORDER};
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        border: 1px solid rgba(128, 128, 128, 0.2);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         margin-bottom: 20px;
-    }}
-    .stMetric {{
-        background-color: {COLOR_WHITE};
+        color: var(--text-color);
+    }
+    .stCard h4 {
+        color: var(--primary-color) !important;
+    }
+    .stMetric {
+        background-color: var(--secondary-background-color) !important;
         padding: 15px;
         border-radius: 10px;
-        border-left: 5px solid {COLOR_ORANGE};
-        border-top: 1px solid {COLOR_BORDER};
-        border-right: 1px solid {COLOR_BORDER};
-        border-bottom: 1px solid {COLOR_BORDER};
-        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    }}
-    .quote-box {{
-        background-color: {COLOR_LIGHT_BG};
-        border-left: 4px solid {COLOR_BLUE};
+        border-left: 5px solid #fc8019 !important; /* Swiggy Orange accent */
+        border-top: 1px solid rgba(128, 128, 128, 0.15) !important;
+        border-right: 1px solid rgba(128, 128, 128, 0.15) !important;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.15) !important;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .stMetric div {
+        color: var(--text-color) !important;
+    }
+    .quote-box {
+        background-color: var(--background-color);
+        border-left: 4px solid #fc8019; /* Swiggy Orange accent */
         padding: 12px;
         margin: 8px 0px;
         border-radius: 4px;
         font-style: italic;
-        color: {COLOR_MUTED_TEXT};
-    }}
-    .badge {{
-        background-color: rgba(0, 86, 179, 0.1);
-        color: {COLOR_BLUE};
+        color: var(--text-color);
+        opacity: 0.85;
+    }
+    .badge {
+        background-color: rgba(0, 86, 179, 0.15);
+        color: #0056b3;
         padding: 4px 10px;
         border-radius: 12px;
         font-size: 11px;
         font-weight: 600;
         margin-right: 5px;
-        border: 1px solid rgba(0, 86, 179, 0.2);
-    }}
-    .orange-badge {{
-        background-color: rgba(252, 128, 25, 0.1);
-        color: {COLOR_ORANGE};
+        border: 1px solid rgba(0, 86, 179, 0.3);
+    }
+    .orange-badge {
+        background-color: rgba(252, 128, 25, 0.15);
+        color: #fc8019;
         padding: 4px 10px;
         border-radius: 12px;
         font-size: 11px;
         font-weight: 600;
         margin-right: 5px;
-        border: 1px solid rgba(252, 128, 25, 0.2);
-    }}
+        border: 1px solid rgba(252, 128, 25, 0.3);
+    }
+    .muted-text {
+        color: var(--text-color);
+        opacity: 0.80;
+    }
+    /* Dark-mode specific overrides using media query */
+    @media (prefers-color-scheme: dark) {
+        .badge {
+            background-color: rgba(144, 205, 244, 0.15) !important;
+            color: #90cdf4 !important;
+            border-color: rgba(144, 205, 244, 0.3) !important;
+        }
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -263,7 +280,7 @@ with tab1:
             color_discrete_map={"positive": "#28a745", "neutral": "#ffc107", "negative": "#dc3545"},
             hole=0.45
         )
-        st.plotly_chart(fig_pie, use_container_width=True)
+        fig_pie.update_layout(paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)"); st.plotly_chart(fig_pie, use_container_width=True, theme="streamlit")
         
     with col_t1_2:
         platform_counts = df["platform"].value_counts().reset_index()
@@ -275,7 +292,7 @@ with tab1:
             color="platform",
             color_discrete_sequence=[COLOR_BLUE, COLOR_ORANGE, "#17a2b8", "#6c757d", "#fd7e14"]
         )
-        st.plotly_chart(fig_bar, use_container_width=True)
+        fig_bar.update_layout(paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)"); st.plotly_chart(fig_bar, use_container_width=True, theme="streamlit")
         
     st.markdown("---")
     st.subheader("Customer Keywords & Word Frequencies")
@@ -296,7 +313,7 @@ with tab1:
         color="Frequency",
         color_continuous_scale=["#e0ecf8", COLOR_BLUE]
     )
-    st.plotly_chart(fig_words, use_container_width=True)
+    fig_words.update_layout(paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)"); st.plotly_chart(fig_words, use_container_width=True, theme="streamlit")
 
 # ----- TAB 2: THEMES -----
 with tab2:
@@ -310,7 +327,7 @@ with tab2:
             <div class="stCard">
                 <h4>Cluster #{row['id']}: {row['name']} <span class="badge">{row['size']} Reviews</span></h4>
                 <p><strong>Subtheme:</strong> {row['subtheme']}</p>
-                <p style="color:{COLOR_MUTED_TEXT};">{row['description']}</p>
+                <p class="muted-text">{row['description']}</p>
             </div>
             """, unsafe_allow_html=True)
     else:
@@ -340,7 +357,7 @@ with tab2:
             title="Category exploration friction matrix",
             color_continuous_scale="Oranges"
         )
-        st.plotly_chart(fig_heat, use_container_width=True)
+        fig_heat.update_layout(paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)"); st.plotly_chart(fig_heat, use_container_width=True, theme="streamlit")
     else:
         st.info("Insufficient category-to-barrier mapping data to render heatmap.")
 
@@ -360,7 +377,7 @@ with tab3:
             color="user_segment",
             color_discrete_sequence=px.colors.sequential.Plotly3
         )
-        st.plotly_chart(fig_seg, use_container_width=True)
+        fig_seg.update_layout(paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)"); st.plotly_chart(fig_seg, use_container_width=True, theme="streamlit")
         
     with col_t3_2:
         behavior_counts = df["shopping_behavior"].value_counts().reset_index()
@@ -371,7 +388,7 @@ with tab3:
             title="Shopping Habit Profile",
             color_discrete_sequence=[COLOR_BLUE, COLOR_ORANGE, "#6c757d", "#17a2b8"]
         )
-        st.plotly_chart(fig_beh, use_container_width=True)
+        fig_beh.update_layout(paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)"); st.plotly_chart(fig_beh, use_container_width=True, theme="streamlit")
         
     st.markdown("---")
     st.subheader("Category Purchasing Volume")
@@ -393,7 +410,7 @@ with tab3:
         color="Mentions",
         color_continuous_scale=["#ffe8d6", COLOR_ORANGE]
     )
-    st.plotly_chart(fig_cat, use_container_width=True)
+    fig_cat.update_layout(paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)"); st.plotly_chart(fig_cat, use_container_width=True, theme="streamlit")
 
 # ----- TAB 4: INSIGHTS -----
 with tab4:
@@ -505,9 +522,9 @@ with tab6:
         rating_stars = "⭐" * int(row["rating"]) if pd.notna(row["rating"]) else "Social Thread"
         st.markdown(f"""
         <div class="stCard">
-            <h5><strong>{row['author']}</strong> ({row['platform']}) - <span style="color: {COLOR_ORANGE};">{rating_stars}</span></h5>
-            <p style="font-size: 14px; color: {COLOR_DARK_TEXT};">{row['raw_content']}</p>
-            <p style="font-size: 12px; color: {COLOR_MUTED_TEXT};">
+            <h5><strong>{row['author']}</strong> ({row['platform']}) - <span style="color: #fc8019;">{rating_stars}</span></h5>
+            <p style="font-size: 14px; color: var(--text-color);">{row['raw_content']}</p>
+            <p style="font-size: 12px; color: var(--text-color); opacity: 0.8;">
                 <strong>Segment:</strong> {row['user_segment']} | 
                 <strong>Behavior:</strong> {row['shopping_behavior']} |
                 <strong>Categories:</strong> {row['detected_categories']}

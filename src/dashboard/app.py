@@ -185,7 +185,7 @@ if st.sidebar.button("🔄 Reload & Re-run Ingestion Pipeline", use_container_wi
 
 # Fetch data
 query = """
-SELECT r.id, r.platform, r.raw_content, r.cleaned_content, r.rating, r.created_at,
+SELECT r.id, r.platform, r.author, r.raw_content, r.cleaned_content, r.rating, r.created_at,
        a.sentiment, a.summary, a.intent, a.barriers, a.motivations, a.pain_points,
        a.feature_requests, a.shopping_behavior, a.user_segment, a.detected_categories
 FROM reviews r

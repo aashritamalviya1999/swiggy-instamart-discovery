@@ -1091,16 +1091,6 @@
                     </div>
                 </div>
             </div>
-            
-            <div class="card" style="margin-top: 20px;">
-                <div class="card-header">
-                    <h2 class="card-title"><i class="fa-solid fa-list-ol"></i> Top Customer Keywords & Word Frequencies</h2>
-                    <span class="badge badge-blue">Dynamic Ingestion Scan</span>
-                </div>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 20px;" id="keywords-frequencies-list">
-                    <!-- Dynamic keyword bars will be rendered here -->
-                </div>
-            </div>
         </div>
 
         <!-- --- Tab 2: Insights Panel --- -->
@@ -1782,59 +1772,11 @@
                 setDemoMode();
             }
         }
-
-        // Render top customer keywords and word frequencies
-        function renderKeywords() {
-            const container = document.getElementById('keywords-frequencies-list');
-            if (!container) return;
-            container.innerHTML = '';
-            
-            // Words to exclude from frequencies analysis
-            const stopWords = ["swiggy", "delivery", "minutes", "order", "instamart", "buying", "about", "would", "their", "there", "review", "instance", "should", "could", "always", "checked", "checkout"];
-            const wordCounts = {};
-            
-            // Scan through all ingested customer reviews
-            activeDatabase.reviews.forEach(rev => {
-                const words = rev.raw_content.toLowerCase().split(/\s+/);
-                words.forEach(w => {
-                    const cleaned = w.replace(/[^a-z]/g, '');
-                    // Keep words representing customer concerns (length > 4)
-                    if (cleaned.length > 4 && !stopWords.includes(cleaned)) {
-                        wordCounts[cleaned] = (wordCounts[cleaned] || 0) + 1;
-                    }
-                });
-            });
-            
-            // Sort by count descending
-            const sortedWords = Object.entries(wordCounts)
-                .sort((a, b) => b[1] - a[1])
-                .slice(0, 8); // Top 8 keywords
-                
-            const maxVal = sortedWords[0] ? sortedWords[0][1] : 1;
-            
-            sortedWords.forEach(([word, count]) => {
-                // Calculate percentage relative to maximum count
-                const pct = Math.max((count / maxVal) * 100, 15);
-                container.innerHTML += `
-                    <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; box-shadow: var(--shadow-sm);">
-                        <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px;">
-                            <span style="font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-primary);">${word}</span>
-                            <span style="color: var(--primary); font-weight: 700;">${count} Mentions</span>
-                        </div>
-                        <div style="height: 8px; background-color: var(--bg-tertiary); border-radius: 4px; overflow: hidden;">
-                            <div style="width: ${pct}%; height: 100%; background: linear-gradient(90deg, var(--secondary), var(--primary)); border-radius: 4px;"></div>
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
         // Render dashboard values dynamically
         function renderDashboard() {
             renderKPIs();
             renderInsights();
             renderOpportunities();
-            renderKeywords();
             renderReviewsList(activeDatabase.reviews);
         }
 

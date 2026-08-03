@@ -12,6 +12,7 @@ This repository showcases a complete growth engineering framework designed to so
 *   **Live Analytics Dashboard**: [https://swiggy-instamart-discovery-6ss2oangvc44qmggkbvrhs.streamlit.app](https://swiggy-instamart-discovery-6ss2oangvc44qmggkbvrhs.streamlit.app)
     *   *Explore Ingested Data*: View the 1,000 AI-analyzed reviews, sentiments, semantic clusters, and PM insights in Light/Dark mode.
 *   **Final 10-Slide Presentation Deck (PDF)**: [NL Swiggy Instamart.pdf](https://github.com/aashritamalviya1999/swiggy-instamart-discovery/blob/main/NL%20Swiggy%20Instamart.pdf)
+*   **Final 10-Slide Presentation Deck (PPTX)**: [NL Swiggy Instamart.pptx](https://github.com/aashritamalviya1999/swiggy-instamart-discovery/blob/main/NL%20Swiggy%20Instamart.pptx)
 
 ---
 

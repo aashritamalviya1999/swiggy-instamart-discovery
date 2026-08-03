@@ -778,6 +778,125 @@
             color: var(--text-secondary);
             background: var(--bg-secondary);
         }
+
+        /* MVP Prototype Styles */
+        .mvp-container {
+            display: grid;
+            grid-template-columns: 1.2fr 1.8fr;
+            gap: 25px;
+        }
+        @media (max-width: 900px) {
+            .mvp-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        .cart-panel {
+            border: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+        }
+        .cart-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 12px;
+            margin-bottom: 15px;
+        }
+        .cart-item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 13.5px;
+        }
+        .timer-banner {
+            background: linear-gradient(135deg, rgba(252, 128, 25, 0.1), rgba(239, 68, 68, 0.1));
+            border: 1px solid rgba(252, 128, 25, 0.25);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .rec-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .rec-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            position: relative;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 250px;
+        }
+        .rec-card:hover {
+            border-color: rgba(252, 128, 25, 0.4);
+        }
+        .rec-img {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 10px;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        .rec-title {
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            height: 34px;
+            overflow: hidden;
+            color: var(--text-primary);
+        }
+        .rec-price {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+        .add-mvp-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+        .add-mvp-btn:hover {
+            background: var(--primary-hover);
+        }
+        .checkout-total-row {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            font-size: 14.5px;
+            padding-top: 15px;
+            border-top: 2px dashed var(--border-color);
+            margin-top: 15px;
+        }
     </style>
 </head>
 <body>
@@ -864,6 +983,9 @@
             </button>
             <button class="tab-btn" onclick="switchTab('tab-methodology')">
                 <i class="fa-solid fa-gears"></i> Engine Methodology
+            </button>
+            <button class="tab-btn" onclick="switchTab('tab-mvp')">
+                <i class="fa-solid fa-laptop-code"></i> Live MVP Prototype
             </button>
         </nav>
 
@@ -1101,6 +1223,132 @@
                         <div class="step-info">
                             <h4>Agent 7: PM Recommendation (ICE Prioritization)</h4>
                             <p>Translates validated insights into prioritized feature opportunity briefs scored under the ICE model (Impact, Confidence, Ease).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- --- Tab 6: MVP Prototype Panel --- -->
+        <div id="tab-mvp" class="tab-panel">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fa-solid fa-laptop-code"></i> Live MVP Prototype: 3-Minute Add-On Cart Window</h2>
+                    <span class="badge badge-orange">Interactive PM Prototype</span>
+                </div>
+                
+                <div class="timer-banner">
+                    <i class="fa-solid fa-hourglass-half"></i>
+                    <span>⏱️ <strong id="mvp-timer">03:00</strong> remaining to add items with <strong style="text-decoration: underline;">FREE delivery</strong> to your active order!</span>
+                </div>
+
+                <div class="mvp-container">
+                    <!-- Left Column: Active Cart -->
+                    <div class="cart-panel">
+                        <div class="cart-header-row">
+                            <h3 style="font-size: 15px;"><i class="fa-solid fa-receipt"></i> Active Cart: #INSTA-9402</h3>
+                            <span class="badge badge-blue">Rider Assigning...</span>
+                        </div>
+                        <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 15px;">
+                            Placed: Just Now | Destination: Indiranagar, Bengaluru
+                        </div>
+                        
+                        <!-- Base items (already checked out) -->
+                        <div id="cart-items-list">
+                            <div class="cart-item-row" style="color: var(--text-secondary);">
+                                <div>🥛 Nandini GoodLife Milk (1L) x 2</div>
+                                <div style="font-weight: 600;">₹72.00</div>
+                            </div>
+                            <div class="cart-item-row" style="color: var(--text-secondary);">
+                                <div>🍞 Modern Sliced White Bread (400g) x 1</div>
+                                <div style="font-weight: 600;">₹45.00</div>
+                            </div>
+                        </div>
+
+                        <!-- Add-on segment (empty initially) -->
+                        <div id="mvp-addon-list" style="margin-top: 10px;">
+                            <!-- Added items will appear here -->
+                        </div>
+
+                        <!-- Fees & Totals -->
+                        <div style="margin-top: 20px; font-size: 12px; display: flex; flex-direction: column; gap: 6px; color: var(--text-secondary);">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Cart Subtotal:</span>
+                                <span id="mvp-subtotal">₹117.00</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Delivery Fee:</span>
+                                <span style="text-decoration: line-through; color: #22c55e;">₹35.00</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Handling Fee:</span>
+                                <span>₹5.00</span>
+                            </div>
+                        </div>
+
+                        <div class="checkout-total-row">
+                            <span>Total Bill:</span>
+                            <span id="mvp-total">₹122.00</span>
+                        </div>
+
+                        <button id="reset-mvp-btn" onclick="resetMvpPrototype()" style="margin-top: 20px; width: 100%; background: var(--bg-tertiary); color: var(--text-primary); border: 1px solid var(--border-color); padding: 10px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 12px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                            <i class="fa-solid fa-rotate-left"></i> Reset MVP Scenario
+                        </button>
+                    </div>
+
+                    <!-- Right Column: Cross-Category Add-on Recommendations -->
+                    <div>
+                        <h3 style="font-size: 13px; margin-bottom: 15px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">
+                            💡 Add items below to bypass delivery fees & try new categories:
+                        </h3>
+                        <div class="rec-grid">
+                            <!-- Card 1: Beauty -->
+                            <div class="rec-card">
+                                <div class="rec-img" style="color: #ec4899; background-color: rgba(236, 72, 153, 0.1);"><i class="fa-solid fa-spray-can"></i></div>
+                                <div>
+                                    <div class="rec-title">Neutrogena Hydro Boost Water Gel Face Wash (150ml)</div>
+                                    <div class="rec-price">₹440.00</div>
+                                </div>
+                                <button class="add-mvp-btn" onclick="addMvpItem('Neutrogena Face Wash (150ml)', 440, 'Beauty')">
+                                    + Add to active order
+                                </button>
+                            </div>
+                            
+                            <!-- Card 2: Gourmet -->
+                            <div class="rec-card">
+                                <div class="rec-img" style="color: #22c55e; background-color: rgba(34, 197, 150, 0.1);"><i class="fa-solid fa-lemon"></i></div>
+                                <div>
+                                    <div class="rec-title">Fresh Premium Imported Hass Avocados (2 pcs)</div>
+                                    <div class="rec-price">₹280.00</div>
+                                </div>
+                                <button class="add-mvp-btn" onclick="addMvpItem('Imported Hass Avocados (2 pcs)', 280, 'Gourmet')">
+                                    + Add to active order
+                                </button>
+                            </div>
+
+                            <!-- Card 3: Baby Care -->
+                            <div class="rec-card">
+                                <div class="rec-img" style="color: #3b82f6; background-color: rgba(59, 130, 246, 0.1);"><i class="fa-solid fa-baby"></i></div>
+                                <div>
+                                    <div class="rec-title">Pampers Sensitive Aloe Baby Wipes (80 Sheets)</div>
+                                    <div class="rec-price">₹185.00</div>
+                                </div>
+                                <button class="add-mvp-btn" onclick="addMvpItem('Pampers Aloe Baby Wipes', 185, 'Baby Care')">
+                                    + Add to active order
+                                </button>
+                            </div>
+
+                            <!-- Card 4: Pet Care -->
+                            <div class="rec-card">
+                                <div class="rec-img" style="color: #f59e0b; background-color: rgba(245, 158, 11, 0.1);"><i class="fa-solid fa-dog"></i></div>
+                                <div>
+                                    <div class="rec-title">Drools Chicken & Egg Adult Dog Kibble (1.2kg)</div>
+                                    <div class="rec-price">₹320.00</div>
+                                </div>
+                                <button class="add-mvp-btn" onclick="addMvpItem('Drools Dog Kibble (1.2kg)', 320, 'Pet Care')">
+                                    + Add to active order
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1731,6 +1979,108 @@
         // Close Modal
         function closeModal() {
             document.getElementById('opportunity-modal').classList.remove('active');
+        }
+
+        // MVP Prototype State variables
+        let mvpSubtotal = 117.00;
+        let mvpHandlingFee = 5.00;
+        let addedMvpItems = [];
+        let mvpTimerInterval = null;
+        let mvpSecondsRemaining = 180; // 3 minutes
+
+        // Start MVP Timer
+        function startMvpTimer() {
+            if (mvpTimerInterval) clearInterval(mvpTimerInterval);
+            mvpSecondsRemaining = 180;
+            updateMvpTimerDisplay();
+            
+            mvpTimerInterval = setInterval(() => {
+                mvpSecondsRemaining--;
+                if (mvpSecondsRemaining <= 0) {
+                    clearInterval(mvpTimerInterval);
+                    mvpSecondsRemaining = 0;
+                    document.querySelector('.timer-banner').style.background = 'linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.2))';
+                    document.querySelector('.timer-banner').style.color = '#ef4444';
+                    document.querySelector('.timer-banner').style.borderColor = 'rgba(239, 68, 68, 0.3)';
+                    document.getElementById('mvp-timer').innerText = 'EXPIRED';
+                    alert("Timeout! Your active order has left the store. You can no longer add items with free delivery.");
+                    // Disable add buttons
+                    document.querySelectorAll('.add-mvp-btn').forEach(btn => btn.disabled = true);
+                } else {
+                    updateMvpTimerDisplay();
+                }
+            }, 1000);
+        }
+
+        function updateMvpTimerDisplay() {
+            const minutes = Math.floor(mvpSecondsRemaining / 60);
+            const seconds = mvpSecondsRemaining % 60;
+            document.getElementById('mvp-timer').innerText = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // Add item to MVP cart
+        function addMvpItem(name, price, category) {
+            if (mvpSecondsRemaining <= 0) {
+                alert("Order append window has closed!");
+                return;
+            }
+            if (addedMvpItems.some(item => item.name === name)) {
+                alert("This item has already been added to your order!");
+                return;
+            }
+
+            addedMvpItems.push({ name, price, category });
+            
+            // Add to UI list
+            const list = document.getElementById('mvp-addon-list');
+            const row = document.createElement('div');
+            row.className = 'cart-item-row';
+            row.style.color = 'var(--primary)';
+            row.style.fontWeight = '600';
+            row.innerHTML = `
+                <div><i class="fa-solid fa-circle-plus"></i> ${name} (${category})</div>
+                <div>₹${price.toFixed(2)}</div>
+            `;
+            list.appendChild(row);
+
+            // Update subtotal & total
+            mvpSubtotal += price;
+            document.getElementById('mvp-subtotal').innerText = `₹${mvpSubtotal.toFixed(2)}`;
+            document.getElementById('mvp-total').innerText = `₹${(mvpSubtotal + mvpHandlingFee).toFixed(2)}`;
+            
+            // Alert user of successful append
+            alert(`"${name}" successfully appended to Order #INSTA-9402 with FREE delivery!`);
+        }
+
+        // Reset MVP scenario
+        function resetMvpPrototype() {
+            mvpSubtotal = 117.00;
+            addedMvpItems = [];
+            document.getElementById('mvp-addon-list').innerHTML = '';
+            document.getElementById('mvp-subtotal').innerText = `₹117.00`;
+            document.getElementById('mvp-total').innerText = `₹122.00`;
+            
+            // Reset banner styling
+            document.querySelector('.timer-banner').style.background = 'linear-gradient(135deg, rgba(252, 128, 25, 0.1), rgba(239, 68, 68, 0.1))';
+            document.querySelector('.timer-banner').style.color = 'var(--primary)';
+            document.querySelector('.timer-banner').style.borderColor = 'rgba(252, 128, 25, 0.25)';
+            
+            // Enable add buttons
+            document.querySelectorAll('.add-mvp-btn').forEach(btn => btn.disabled = false);
+            
+            startMvpTimer();
+        }
+
+        // Hook start timer to tab switch
+        const originalSwitchTab = switchTab;
+        switchTab = function(tabId) {
+            originalSwitchTab(tabId);
+            if (tabId === 'tab-mvp') {
+                resetMvpPrototype();
+            } else {
+                if (mvpTimerInterval) clearInterval(mvpTimerInterval);
+            }
         }
     </script>
 </body>
